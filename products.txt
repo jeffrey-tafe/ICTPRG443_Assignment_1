@@ -1,20 +1,20 @@
-001,"Garlic Paste",0.43
-002,"Rabbit Legs",7.72
-003,"Energy Drink",2.62
-004,"Bread Roll, Whole Wheat",1.31
-005," Cheese - Parmigiano",4.76
-006,"Chef Hat 25cm",3.33
-007,"Butter - Unsalted",9.77
-008,"Nantucket Cranberry Juice",5.96
-009,"Rum - Light, Captain Morgan",7.32
-010,"Uniform Linen Charge",9.44
-011,"Shrimp - Prawn",8.57
-012,"Bread Fig And Almond",1.15
-013,"Beef - Cooked, Corned",3.69
-014,"Steel Wool",8.66
-015,"Sorrel - Fresh",9.47
-016,"Water - Evian 355 Ml",9.96
-017,"Lemon Grass",1.50
-018,"Wine - Jafflin Bourgongone",0.81
-019,"Wine - White, Antinore Orvieto",8.90
-020,"Lemonade - Black Cherry, 591 Ml",2.58
+001;"Garlic Paste";0.43
+002;"Rabbit Legs";7.72
+003;"Energy Drink";2.62
+004;"Bread Roll, Whole Wheat";1.31
+005;" Cheese - Parmigiano";4.76
+006;"Chef Hat 25cm";3.33
+007;"Butter - Unsalted";9.77
+008;"Nantucket Cranberry Juice";5.96
+009;"Rum - Light, Captain Morgan";7.32
+010;"Uniform Linen Charge";9.44
+011;"Shrimp - Prawn";8.57
+012;"Bread Fig And Almond";1.15
+013;"Beef - Cooked, Corned";3.69
+014;"Steel Wool";8.66
+015;"Sorrel - Fresh";9.47
+016;"Water - Evian 355 Ml";9.96
+017;"Lemon Grass";1.50
+018;"Wine - Jafflin Bourgongone";0.81
+019;"Wine - White, Antinore Orvieto";8.90
+020;"Lemonade - Black Cherry, 591 Ml";2.58
