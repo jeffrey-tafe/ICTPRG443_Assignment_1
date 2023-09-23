@@ -1,0 +1,59 @@
+============================================================================================================
+20230920
+============================================================================================================
+Part 1 - Design (UML)
+Part 2 - Coding
+Part 3 - Testing
+
+Scenario: Supermarket Self-Service Checkout
+* Simulate processes of checkout in console
+* Object oriented approach
+* Classes
+** Main
+** Checkout register
+** Products
+** Can add but need above three
+
+Product class is used by checkout_register
+cr reads text file of products and creates product objects from it
+
+software architecture documentation
+uml - product and checkoutresister
+
+use content managers when reading and writing data to files
+- with statement
+- topic 1
+
+System must allow scanning multiple products for multiple customers
+- nested loops
+
+suggested approach
+- develop products/ getting products
+- validate inputs
+- look at multiple customers
+
+must document all five methods in checkout register class using th epython language comment features
+
+Needs to access two txt files
+- products - barcode,description,price
+- transactions - date,product_barcode, price
+
+Testing
+- have to use python unittest framework - topic 5
+- test checkout register class
+- separate test module
+- minimum tests
+-- all getter methods of product class
+-- following methods from checkout register
+-- scan_item()
+-- accept_payment()
+-- init()
+
+Debugging
+- use pycharm debugging with at least two breakpoints
+- capture at least 2 screenshots showing execution of code and include in SAD
+
+Test Plan
+- include in SAD
+- At least 6 test cases and results - topic 5 video - 1:30:30
+============================================================================================================
