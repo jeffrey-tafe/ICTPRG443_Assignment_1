@@ -1,6 +1,7 @@
 from decimal import *
 from Product import Product
 import os
+from tabulate import tabulate
 
 class CheckoutRegister:
 
@@ -18,7 +19,11 @@ class CheckoutRegister:
         # get and store product list as part of instantiation
         self.__load_products()
 
-    # Getters
+
+
+    # Methods
+
+    # Import the product list
     def __load_products(self):
         self.__product_list = []
 
@@ -38,10 +43,6 @@ class CheckoutRegister:
                 # Add product to products list
                 self.__product_list.append(product)
 
-    # Setters
-
-    # Methods
-
     # scan item from input barcode
     def scan_item(self, barcode):
         barcode = barcode.strip()
@@ -56,24 +57,39 @@ class CheckoutRegister:
             CheckoutRegister.__show_error_barcode()
             return
 
-        # get product
+        # get product, add to transaction list and total
         product = self.__get_product(barcode)
-
-        # add product to current transaction
         self.__current_transaction_list.append(product)
-
-        # add product to current transaction total
         self.__current_transaction_total += product.get_price()
 
-        # display product name, price and subtotal
-        print(f"Item: {product.get_name()} | PRICE: ${product.get_price()} | SUBTOTAL: {self.__current_transaction_total}")
+        # build output string and display
+        output = f"ITEM: {product.get_name()}"
+        output += f" | PRICE: ${product.get_price()}"
+        output += f" | SUBTOTAL: ${self.__current_transaction_total}"
+        print(output)
 
     # accept payment and subtract from total
     def accept_payment(self, amount_paid):
         pass
 
+    # Build receipt string with tabulate then output
     def print_receipt(self):
-        pass
+        # Receipt header
+        receipt = "\n----- FINAL RECEIPT -----\n"
+
+        headers = ["ITEM", "PRICE"]
+        data = []
+
+        for product in self.__current_transaction_list:
+            data.append([product.get_name(), f"${product.get_price()}"])
+
+        data.append(["TOTAL", f"${self.__current_transaction_total}"])
+        table = tabulate(data, headers)
+
+        receipt += table
+        print(receipt)
+
+
 
     def save_transaction(self, date, barcode, amount):
         pass
@@ -106,6 +122,8 @@ class CheckoutRegister:
             self.prompt_barcode()
             continue_scan = self.prompt_another_item()
 
+        self.print_receipt()
+
     def prompt_barcode(self):
         barcode = input("\nPlease enter the barcode of your item: ")
         self.scan_item(barcode)
@@ -117,15 +135,15 @@ class CheckoutRegister:
         return False
 
     def prompt_another_item(self):
-        response = input("Would you like to scan another item? (Y/N): ")
-        response = response.strip()
+        while True:
+            response = input("\nWould you like to scan another item? (Y/N): ")
+            response = response.strip()
 
-        if response.lower() == "y":
-            return True
-        if response.lower() == "n":
-            return False
-        print("Response not recognised. Please try again.")
-        self.prompt_another_item()
+            if response.lower() == "y":
+                return True
+            if response.lower() == "n":
+                return False
+            print("Response not recognised. Please try again.")
 
 
 
