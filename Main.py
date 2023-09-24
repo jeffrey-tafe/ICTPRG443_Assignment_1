@@ -1,4 +1,9 @@
 from CheckoutRegister import CheckoutRegister
 
-checkout = CheckoutRegister()
-checkout.start()
+
+class Main:
+    checkout = CheckoutRegister()
+    checkout.start()
+
+
+main = Main()
