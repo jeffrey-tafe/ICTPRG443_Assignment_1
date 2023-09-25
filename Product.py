@@ -6,7 +6,7 @@ class Product:
     # Constants
     DEFAULT_BARCODE = "BARCODE NOT SET"
     DEFAULT_NAME = "NAME NOT SET"
-    DEFAULT_PRICE = 0.0
+    DEFAULT_PRICE = Decimal(0)
 
     # Constructor
     def __init__(self, barcode, name, price):
@@ -51,8 +51,6 @@ class Product:
         self.__name = name
 
     def set_price(self, price):
-        # price = price.strip()
-        #
         # # Verify price is not empty
         if len(price) < 1:
             self.__price = Product.DEFAULT_PRICE
@@ -65,6 +63,9 @@ class Product:
             self.__price = Product.DEFAULT_PRICE
             return
         except TypeError:
+            self.__price = Product.DEFAULT_PRICE
+            return
+        except InvalidOperation:
             self.__price = Product.DEFAULT_PRICE
             return
 
@@ -87,28 +88,3 @@ class Product:
         details += f"\n\tPrice: {self.__price}"
         details += f"\n]"
         return details
-
-# Cruft code below used to verify functionality
-
-# # product = Product("00003", "Garlic Paste", "0.4333")
-# # print(product)
-#
-# product_list = []
-#
-# # Open products.txt with context manager
-# with open('products.txt', 'r') as products:
-#     for line in products:
-#
-#         # Split the line into fields
-#         fields = line.strip().split(';')
-#
-#         # Get named properties from each field in list
-#         barcode, name, price = fields
-#
-#         # Create product object from properties
-#         product = Product(barcode, name, price)
-#
-#         # Add product to products list
-#         product_list.append(product)
-#
-# print(product_list)
