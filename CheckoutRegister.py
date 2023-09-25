@@ -20,23 +20,38 @@ class CheckoutRegister:
 
     # accept payment and subtract from total
     def accept_payment(self, amount_paid):
-        self.__current_transaction_payments_made += amount_paid
-        self.__current_transaction_payment_due -= amount_paid
+
+        if self.__is_valid_payment(amount_paid):
+            # Convert to decimal with 2 decimal places then pass to accept payment
+            payment = Decimal(amount_paid)
+            payment = payment.quantize(Decimal("0.00"))
+            self.__current_transaction_payments_made += payment
+            self.__current_transaction_payment_due -= payment
+        else:
+            self.__show_error_invalid_payment_amount()
 
     # clear console window
     @staticmethod
     def cls():
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    def get_current_transaction_list(self):
+        return self.__current_transaction_list
+
+    def get_current_transaction_total(self):
+        return self.__current_transaction_total
+
+    def get_current_transaction_payments_made(self):
+        return self.__current_transaction_payments_made
+
+    def get_current_transaction_payment_due(self):
+        return self.__current_transaction_payment_due
+
     # return product object from input barcode
     def __get_product(self, barcode):
         for product in self.__product_list:
             if product.get_barcode() == barcode:
                 return product
-
-    # return product list
-    def __get_product_list(self):
-        return self.__product_list
 
     # return if payment complete
     def __is_payment_complete(self):
@@ -147,7 +162,7 @@ class CheckoutRegister:
     # prompt for another barcode
     def __prompt_barcode(self):
         barcode = input("\nPlease enter the barcode of your item: ")
-        self.__scan_item(barcode)
+        self.scan_item(barcode)
 
     # prompt if another customer
     def prompt_new_customer(self):
@@ -165,15 +180,16 @@ class CheckoutRegister:
     def __prompt_payment(self):
         print(f"\nPayment due: ${self.__current_transaction_payment_due}")
         payment = input(f"Please enter an amount to pay: ")
-        if self.__is_valid_payment(payment):
-            # Convert to decimal with 2 decimal places then pass to accept payment
-            payment = Decimal(payment)
-            payment = payment.quantize(Decimal("0.00"))
-            self.accept_payment(Decimal(payment))
-        else:
-            self.__show_error_invalid_payment_amount()
+        self.accept_payment(payment)
+        # if self.__is_valid_payment(payment):
+        #     # Convert to decimal with 2 decimal places then pass to accept payment
+        #     payment = Decimal(payment)
+        #     payment = payment.quantize(Decimal("0.00"))
+        #     self.accept_payment(Decimal(payment))
+        # else:
+        #     self.__show_error_invalid_payment_amount()
 
-    # rest instance variables used to track transaction
+    # reset instance variables used to track transaction
     def reset_register(self):
         # store items purchased in this transaction
         self.__current_transaction_list = []
@@ -198,7 +214,7 @@ class CheckoutRegister:
                 csv_writer.writerow(row)
 
     # scan item from input barcode
-    def __scan_item(self, barcode):
+    def scan_item(self, barcode):
         barcode = barcode.strip()
 
         # If invalid input, exit
