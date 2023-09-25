@@ -9,15 +9,8 @@ class CheckoutRegister:
 
     # Constructor
     def __init__(self):
-        # store items purchased in this transaction
-        self.__current_transaction_list = []
-
-        # store running total for final price
-        self.__current_transaction_total = Decimal(0)
-
-        # store payments made so far and owing
-        self.__current_transaction_payments_made = Decimal(0)
-        self.__current_transaction_payment_due = Decimal(0)
+        # Reset fields used to store transaction history
+        self.reset_register()
 
         # get and store product list as part of instantiation
         self.__load_products()
@@ -152,6 +145,17 @@ class CheckoutRegister:
         barcode = input("\nPlease enter the barcode of your item: ")
         self.__scan_item(barcode)
 
+    def prompt_new_customer(self):
+        while True:
+            response = input("\nWould you like to begin a new transaction? (Y/N): ")
+            response = response.strip()
+
+            if response.lower() == "y":
+                return True
+            if response.lower() == "n":
+                return False
+            print("Response not recognised. Please try again.")
+
     def __prompt_payment(self):
         print(f"\nPayment due: ${self.__current_transaction_payment_due}")
         payment = input(f"Please enter an amount to pay: ")
@@ -162,6 +166,17 @@ class CheckoutRegister:
             self.accept_payment(Decimal(payment))
         else:
             self.__show_error_invalid_payment_amount()
+
+    def reset_register(self):
+        # store items purchased in this transaction
+        self.__current_transaction_list = []
+
+        # store running total for final price
+        self.__current_transaction_total = Decimal(0)
+
+        # store payments made so far and owing
+        self.__current_transaction_payments_made = Decimal(0)
+        self.__current_transaction_payment_due = Decimal(0)
 
     def __save_transaction(self, date, barcode, amount):
         pass
@@ -196,6 +211,9 @@ class CheckoutRegister:
         print("ERROR!! Invalid amount entered. Please try again.")
 
     def start(self):
+
+        self.reset_register()
+
         print("\n\nWelcome to the Self Service Checkout.")
 
         # Scan items
@@ -211,9 +229,8 @@ class CheckoutRegister:
             continue_pay = self.__is_payment_complete()
 
         # Save transaction
+        # TODO
 
+        # Display receipt
         self.__print_receipt()
-
-        # Prompt new customer
-
 
