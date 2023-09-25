@@ -1,6 +1,5 @@
 TODO
 - Save transaction
-- Allow multiple customers
 - Build unit tests
 
 

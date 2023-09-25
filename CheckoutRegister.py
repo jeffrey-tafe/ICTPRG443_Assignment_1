@@ -2,7 +2,8 @@ from decimal import *
 from Product import Product
 import os
 from tabulate import tabulate
-
+from datetime import date
+import csv
 
 
 class CheckoutRegister:
@@ -22,6 +23,7 @@ class CheckoutRegister:
         self.__current_transaction_payments_made += amount_paid
         self.__current_transaction_payment_due -= amount_paid
 
+    # clear console window
     @staticmethod
     def cls():
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -130,6 +132,7 @@ class CheckoutRegister:
         receipt += table
         print(receipt)
 
+    # prompt if another item to scan
     def __prompt_another_item(self):
         while True:
             response = input("\nWould you like to scan another item? (Y/N): ")
@@ -141,10 +144,12 @@ class CheckoutRegister:
                 return False
             print("Response not recognised. Please try again.")
 
+    # prompt for another barcode
     def __prompt_barcode(self):
         barcode = input("\nPlease enter the barcode of your item: ")
         self.__scan_item(barcode)
 
+    # prompt if another customer
     def prompt_new_customer(self):
         while True:
             response = input("\nWould you like to begin a new transaction? (Y/N): ")
@@ -156,6 +161,7 @@ class CheckoutRegister:
                 return False
             print("Response not recognised. Please try again.")
 
+    # prompt for payment
     def __prompt_payment(self):
         print(f"\nPayment due: ${self.__current_transaction_payment_due}")
         payment = input(f"Please enter an amount to pay: ")
@@ -167,6 +173,7 @@ class CheckoutRegister:
         else:
             self.__show_error_invalid_payment_amount()
 
+    # rest instance variables used to track transaction
     def reset_register(self):
         # store items purchased in this transaction
         self.__current_transaction_list = []
@@ -178,8 +185,17 @@ class CheckoutRegister:
         self.__current_transaction_payments_made = Decimal(0)
         self.__current_transaction_payment_due = Decimal(0)
 
-    def __save_transaction(self, date, barcode, amount):
-        pass
+    # write transaction to file
+    def __save_transaction(self):
+        today = str(date.today())
+        delimiter = ";"
+
+        with open('transactions.csv', mode='a', newline='') as transactions_file:
+            csv_writer = csv.writer(transactions_file, delimiter=delimiter)
+
+            for product in self.__current_transaction_list:
+                row = [today, product.get_barcode(), product.get_name(), f"${product.get_price()}"]
+                csv_writer.writerow(row)
 
     # scan item from input barcode
     def __scan_item(self, barcode):
@@ -202,16 +218,21 @@ class CheckoutRegister:
         output += f" | SUBTOTAL: ${self.__current_transaction_total}"
         print(output)
 
+    # display barcode error
     @staticmethod
     def __show_error_barcode():
         print("ERROR!! Scanned barcode is incorrect")
 
+    # display invalid input error
     @staticmethod
     def __show_error_invalid_payment_amount():
         print("ERROR!! Invalid amount entered. Please try again.")
 
+    # main checkout method
     def start(self):
 
+        # clear any previous customer transaction from console and checkout
+        self.cls()
         self.reset_register()
 
         print("\n\nWelcome to the Self Service Checkout.")
@@ -229,8 +250,9 @@ class CheckoutRegister:
             continue_pay = self.__is_payment_complete()
 
         # Save transaction
-        # TODO
+        self.__save_transaction()
 
         # Display receipt
         self.__print_receipt()
 
+        print("\n\nThank you for shopping with Smith Markets. Have a great day :)")
