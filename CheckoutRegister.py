@@ -204,13 +204,12 @@ class CheckoutRegister:
     # write transaction to file
     def __save_transaction(self):
         today = str(date.today())
-        delimiter = ";"
 
         with open('transactions.csv', mode='a', newline='') as transactions_file:
-            csv_writer = csv.writer(transactions_file, delimiter=delimiter)
+            csv_writer = csv.writer(transactions_file)
 
             for product in self.__current_transaction_list:
-                row = [today, product.get_barcode(), product.get_name(), f"${product.get_price()}"]
+                row = [today, product.get_barcode(), f"${product.get_price()}"]
                 csv_writer.writerow(row)
 
     # scan item from input barcode
