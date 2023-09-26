@@ -53,6 +53,10 @@ class CheckoutRegister:
             if product.get_barcode() == barcode:
                 return product
 
+    # return if any items were scanned
+    def __is_any_items_scanned(self):
+        return len(self.__current_transaction_list) > 0
+
     # return if payment complete
     def __is_payment_complete(self):
         return self.__current_transaction_payment_due > 0
@@ -181,13 +185,6 @@ class CheckoutRegister:
         print(f"\nPayment due: ${self.__current_transaction_payment_due}")
         payment = input(f"Please enter an amount to pay: ")
         self.accept_payment(payment)
-        # if self.__is_valid_payment(payment):
-        #     # Convert to decimal with 2 decimal places then pass to accept payment
-        #     payment = Decimal(payment)
-        #     payment = payment.quantize(Decimal("0.00"))
-        #     self.accept_payment(Decimal(payment))
-        # else:
-        #     self.__show_error_invalid_payment_amount()
 
     # reset instance variables used to track transaction
     def reset_register(self):
@@ -257,6 +254,10 @@ class CheckoutRegister:
         while continue_scan:
             self.__prompt_barcode()
             continue_scan = self.__prompt_another_item()
+
+        # If no items purchased, end method
+        if not self.__is_any_items_scanned():
+            return
 
         # Accept payments
         continue_pay = True

@@ -5,15 +5,15 @@ TODO
 --- get_current_transaction_total()
 --- get_current_transaction_payments_made()
 --- get_current_transaction_payment_due()
+--- __is_any_items_scanned()
 -- Errors CheckoutRegister
 --- prompt_new_customer() method is showing as private in your UML model but public in your py file.
 --- scan_item() method is showing as private in your UML model but public in your py file.
 - Update Software Architecture Document
 -- Update UML model screenshot
 
-- If payment due is 0, skip payment logic
 
-- Remove product.name from transaction log
+
 
 https://learn.tafesa.edu.au/mod/assign/view.php?id=1243532
 
