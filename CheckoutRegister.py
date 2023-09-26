@@ -41,11 +41,11 @@ class CheckoutRegister:
     def get_current_transaction_total(self):
         return self.__current_transaction_total
 
-    def get_current_transaction_payments_made(self):
-        return self.__current_transaction_payments_made
-
     def get_current_transaction_payment_due(self):
         return self.__current_transaction_payment_due
+
+    def get_current_transaction_payments_made(self):
+        return self.__current_transaction_payments_made
 
     # return product object from input barcode
     def __get_product(self, barcode):
