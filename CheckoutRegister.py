@@ -206,7 +206,7 @@ class CheckoutRegister:
             csv_writer = csv.writer(transactions_file)
 
             for product in self.__current_transaction_list:
-                row = [today, product.get_barcode(), f"${product.get_price()}"]
+                row = [today, product.get_barcode(), product.get_price()]
                 csv_writer.writerow(row)
 
     # scan item from input barcode
